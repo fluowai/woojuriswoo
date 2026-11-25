@@ -1,0 +1,4 @@
+import { NextResponse } from 'next/server'
+import { requireRole, toErrorResponse } from '@/lib/auth/account'
+import { stopSession } from '@/lib/waha/client'
+export async function POST(_: Request, { params }: { params: Promise<{ id: string }> }) { try { const { supabase, accountId } = await requireRole('admin'); const { id } = await params; const { data } = await supabase.from('waha_instances').select('session_name').eq('id', id).eq('account_id', accountId).single(); if (!data) return NextResponse.json({ error: 'Canal não encontrado' }, { status: 404 }); await stopSession(data.session_name); await supabase.from('waha_instances').update({ status: 'disconnected', last_seen_at: new Date().toISOString() }).eq('id', id); return NextResponse.json({ success: true }) } catch (e) { return toErrorResponse(e) } }

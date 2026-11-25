@@ -1,0 +1,4 @@
+import { NextResponse } from 'next/server'
+import { requireRole, toErrorResponse } from '@/lib/auth/account'
+import { stopSession } from '@/lib/waha/client'
+export async function DELETE(_: Request, { params }: { params: Promise<{ id: string }> }) { try { const { supabase, accountId } = await requireRole('admin'); const { id } = await params; const { data: row } = await supabase.from('waha_instances').select('session_name').eq('id', id).eq('account_id', accountId).single(); if (!row) return NextResponse.json({ error: 'Canal não encontrado' }, { status: 404 }); try { await stopSession(row.session_name) } catch {} const { error } = await supabase.from('waha_instances').delete().eq('id', id).eq('account_id', accountId); if (error) throw error; return NextResponse.json({ success: true }) } catch (e) { return toErrorResponse(e) } }
