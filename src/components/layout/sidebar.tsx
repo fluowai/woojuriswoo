@@ -1,12 +1,12 @@
-"use client";
+'use client';
 
-import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { useEffect } from "react";
-import { cn } from "@/lib/utils";
-import { useAuth } from "@/hooks/use-auth";
-import { useTotalUnread } from "@/hooks/use-total-unread";
-import { useUnreadNotifications } from "@/hooks/use-unread-notifications";
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+import { useEffect } from 'react';
+import { cn } from '@/lib/utils';
+import { useAuth } from '@/hooks/use-auth';
+import { useTotalUnread } from '@/hooks/use-total-unread';
+import { useUnreadNotifications } from '@/hooks/use-unread-notifications';
 import {
   BarChart3,
   Bell,
@@ -39,8 +39,9 @@ import {
   Workflow,
   X,
   Zap,
-} from "lucide-react";
-import type { AccountRole } from "@/lib/auth/roles";
+} from 'lucide-react';
+import type { AccountRole } from '@/lib/auth/roles';
+import { LEGAL_ROLE_LABELS } from '@/lib/legal/types';
 
 // Per-role chip metadata used in the sidebar's account strip + the
 // Members tab roster. Keeping this near both consumers in a single
@@ -52,45 +53,37 @@ const ROLE_CHIP: Record<
 > = {
   owner: {
     icon: Crown,
-    labelKey: "roleOwner",
+    labelKey: 'roleOwner',
     // Amber: scarce, immutable, "the boss" — gets visual emphasis.
-    className:
-      "border-amber-500/40 bg-amber-500/10 text-amber-300",
+    className: 'border-amber-500/40 bg-amber-500/10 text-amber-300',
   },
   admin: {
     icon: Shield,
-    labelKey: "roleAdmin",
+    labelKey: 'roleAdmin',
     // Primary-tinted: significant but not as scarce as owner.
-    className:
-      "border-primary/40 bg-primary/10 text-primary",
+    className: 'border-primary/40 bg-primary/10 text-primary',
   },
   agent: {
     icon: UserCog,
-    labelKey: "roleAgent",
+    labelKey: 'roleAgent',
     // Neutral slate: the operational default.
-    className:
-      "border-border bg-muted text-foreground",
+    className: 'border-border bg-muted text-foreground',
   },
   viewer: {
     icon: User,
-    labelKey: "roleViewer",
+    labelKey: 'roleViewer',
     // Muted slate: read-only role; visually quieter than agent.
-    className:
-      "border-border bg-card text-muted-foreground",
+    className: 'border-border bg-card text-muted-foreground',
   },
 };
-import {
-  Avatar,
-  AvatarFallback,
-  AvatarImage,
-} from "@/components/ui/avatar";
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+} from '@/components/ui/dropdown-menu';
 
 interface NavItem {
   href: string;
@@ -101,37 +94,52 @@ interface NavItem {
 }
 
 const legalCoreNavItems: NavItem[] = [
-  { href: "/dashboard", labelKey: "dashboard", icon: LayoutDashboard },
-  { href: "/inbox", labelKey: "inbox", icon: MessageSquare },
-  { href: "/funil", labelPt: "Funil Jurídico", icon: FolderKanban },
-  { href: "/clients", labelPt: "Clientes e Partes", icon: UserCheck },
-  { href: "/conflicts", labelPt: "Conflitos", icon: ShieldAlert },
-  { href: "/matters", labelPt: "Pastas Jurídicas", icon: Briefcase },
-  { href: "/cases", labelPt: "Processos", icon: Landmark },
-  { href: "/communications", labelPt: "Comunicações", icon: InboxIcon },
-  { href: "/deadlines", labelPt: "Prazos e Tarefas", icon: Clock },
-  { href: "/agenda", labelPt: "Agenda", icon: CalendarDays },
-  { href: "/documents", labelPt: "Documentos e Modelos", icon: FileText },
-  { href: "/contracts", labelPt: "Contratos e Assinaturas", icon: FileSignature },
-  { href: "/finance", labelPt: "Financeiro", icon: Wallet },
-  { href: "/portal", labelPt: "Portal do Cliente", icon: Globe },
-  { href: "/reports", labelPt: "Relatórios e LGPD", icon: BarChart3 },
-  { href: "/team", labelPt: "Equipe e Unidades", icon: UsersRound },
+  { href: '/dashboard', labelKey: 'dashboard', icon: LayoutDashboard },
+  { href: '/inbox', labelKey: 'inbox', icon: MessageSquare },
+  { href: '/funil', labelPt: 'Funil Jurídico', icon: FolderKanban },
+  { href: '/clients', labelPt: 'Clientes e Partes', icon: UserCheck },
+  { href: '/conflicts', labelPt: 'Conflitos', icon: ShieldAlert },
+  { href: '/matters', labelPt: 'Pastas Jurídicas', icon: Briefcase },
+  { href: '/cases', labelPt: 'Processos', icon: Landmark },
+  { href: '/communications', labelPt: 'Comunicações', icon: InboxIcon },
+  { href: '/deadlines', labelPt: 'Prazos e Tarefas', icon: Clock },
+  { href: '/agenda', labelPt: 'Agenda', icon: CalendarDays },
+  { href: '/documents', labelPt: 'Documentos e Modelos', icon: FileText },
+  {
+    href: '/contracts',
+    labelPt: 'Contratos e Assinaturas',
+    icon: FileSignature,
+  },
+  { href: '/finance', labelPt: 'Financeiro', icon: Wallet },
+  { href: '/portal', labelPt: 'Portal do Cliente', icon: Globe },
+  { href: '/reports', labelPt: 'Relatórios e LGPD', icon: BarChart3 },
+  { href: '/team', labelPt: 'Equipe e Unidades', icon: UsersRound },
 ];
 
 const waChannelNavItems: NavItem[] = [
-  { href: "/channels", labelPt: "Canais", icon: Radio },
-  { href: "/notifications", labelKey: "notifications", icon: Bell },
-  { href: "/contacts", labelKey: "contacts", icon: Users },
-  { href: "/pipelines", labelKey: "pipelines", icon: GitBranch },
-  { href: "/broadcasts", labelKey: "broadcasts", icon: Radio },
-  { href: "/automations", labelKey: "automations", icon: Zap },
-  { href: "/flows", labelKey: "flows", icon: Workflow, beta: true },
-  { href: "/agents", labelKey: "aiAgents", icon: Bot },
+  { href: '/channels', labelPt: 'Canais', icon: Radio },
+  { href: '/notifications', labelKey: 'notifications', icon: Bell },
+  { href: '/contacts', labelKey: 'contacts', icon: Users },
+  { href: '/pipelines', labelKey: 'pipelines', icon: GitBranch },
+  { href: '/broadcasts', labelKey: 'broadcasts', icon: Radio },
+  { href: '/automations', labelKey: 'automations', icon: Zap },
+  { href: '/flows', labelKey: 'flows', icon: Workflow, beta: true },
+  { href: '/agents', labelKey: 'aiAgents', icon: Bot },
 ];
 
 const bottomNavItems = [
-  { href: "/settings", labelKey: "settings", icon: Settings },
+  { href: '/settings', labelKey: 'settings', icon: Settings },
+];
+
+const platformNavItems: NavItem[] = [
+  {
+    href: '/dashboard',
+    labelPt: 'Visão geral da plataforma',
+    icon: LayoutDashboard,
+  },
+  { href: '/team', labelPt: 'Escritórios e revendas', icon: UsersRound },
+  { href: '/reports', labelPt: 'Métricas e auditoria', icon: BarChart3 },
+  { href: '/settings', labelPt: 'Configurações SaaS', icon: Settings },
 ];
 
 interface SidebarProps {
@@ -140,12 +148,15 @@ interface SidebarProps {
   onClose?: () => void;
 }
 
-import { useTranslations } from "next-intl";
+import { useTranslations } from 'next-intl';
 
 export function Sidebar({ open = false, onClose }: SidebarProps) {
-  const t = useTranslations("Sidebar");
+  const t = useTranslations('Sidebar');
   const pathname = usePathname();
   const { profile, profileLoading, account, accountRole, signOut } = useAuth();
+  const legalRole = profile?.legal_role ?? null;
+  const isPlatformOperator =
+    legalRole === 'platform_ops' || legalRole === 'reseller_admin';
   const totalUnread = useTotalUnread();
   const unreadNotifications = useUnreadNotifications();
   // Only surface the account-name strip when it actually carries
@@ -157,9 +168,7 @@ export function Sidebar({ open = false, onClose }: SidebarProps) {
   // we gate on. Wait for the profile fetch to settle first, otherwise
   // the strip flashes in once the row resolves (a layout jump).
   const showAccountStrip =
-    !profileLoading &&
-    !!account?.name &&
-    account.name !== profile?.full_name;
+    !profileLoading && !!account?.name && account.name !== profile?.full_name;
 
   // Close the drawer when route changes — users opened it to navigate,
   // so once they pick a destination the drawer should get out of the way.
@@ -174,14 +183,14 @@ export function Sidebar({ open = false, onClose }: SidebarProps) {
   useEffect(() => {
     if (!open) return;
     const prev = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
+    document.body.style.overflow = 'hidden';
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") onClose?.();
+      if (e.key === 'Escape') onClose?.();
     };
-    window.addEventListener("keydown", onKey);
+    window.addEventListener('keydown', onKey);
     return () => {
       document.body.style.overflow = prev;
-      window.removeEventListener("keydown", onKey);
+      window.removeEventListener('keydown', onKey);
     };
   }, [open, onClose]);
 
@@ -192,39 +201,39 @@ export function Sidebar({ open = false, onClose }: SidebarProps) {
           part of the main flex row there. */}
       <button
         type="button"
-        aria-label={t("closeMenu")}
+        aria-label={t('closeMenu')}
         onClick={onClose}
         className={cn(
-          "fixed inset-0 z-30 bg-background/70 backdrop-blur-sm transition-opacity lg:hidden",
+          'bg-background/70 fixed inset-0 z-30 backdrop-blur-sm transition-opacity lg:hidden',
           open
-            ? "pointer-events-auto opacity-100"
-            : "pointer-events-none opacity-0",
+            ? 'pointer-events-auto opacity-100'
+            : 'pointer-events-none opacity-0'
         )}
       />
 
       <aside
         className={cn(
           // Mobile: fixed drawer that slides in from the left.
-          "fixed inset-y-0 left-0 z-40 flex h-full w-64 flex-col border-r border-border bg-card",
-          "transition-transform duration-200 ease-out will-change-transform",
-          open ? "translate-x-0" : "-translate-x-full",
+          'border-border bg-card fixed inset-y-0 left-0 z-40 flex h-full w-64 flex-col border-r',
+          'transition-transform duration-200 ease-out will-change-transform',
+          open ? 'translate-x-0' : '-translate-x-full',
           // Desktop: static, always visible — reset all the mobile framing.
-          "lg:static lg:z-0 lg:w-60 lg:translate-x-0 lg:transition-none",
+          'lg:static lg:z-0 lg:w-60 lg:translate-x-0 lg:transition-none'
         )}
-        aria-label={t("primaryNav")}
+        aria-label={t('primaryNav')}
       >
         {/* Logo row. On mobile we put a close button here; on desktop the
             close button is hidden since the sidebar is always-visible. */}
-        <div className="flex h-14 shrink-0 items-center justify-between gap-2 border-b border-border px-4">
+        <div className="border-border flex h-14 shrink-0 items-center justify-between gap-2 border-b px-4">
           <Link href="/dashboard" className="flex items-center gap-2">
-            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary text-primary-foreground shadow-xs">
+            <div className="bg-primary text-primary-foreground flex h-8 w-8 items-center justify-center rounded-lg shadow-xs">
               <Scale className="h-4 w-4" />
             </div>
             <div className="flex flex-col leading-tight">
-              <span className="text-sm font-bold tracking-tight text-foreground">
-                {process.env.NEXT_PUBLIC_BRAND_NAME || t("title")}
+              <span className="text-foreground text-sm font-bold tracking-tight">
+                {process.env.NEXT_PUBLIC_BRAND_NAME || t('title')}
               </span>
-              <span className="text-[10px] font-medium uppercase tracking-wider text-primary">
+              <span className="text-primary text-[10px] font-medium tracking-wider uppercase">
                 Wootech Jurídico
               </span>
             </div>
@@ -232,8 +241,8 @@ export function Sidebar({ open = false, onClose }: SidebarProps) {
           <button
             type="button"
             onClick={onClose}
-            aria-label={t("closeMenu")}
-            className="flex h-9 w-9 items-center justify-center rounded-md text-muted-foreground hover:bg-muted hover:text-foreground lg:hidden"
+            aria-label={t('closeMenu')}
+            className="text-muted-foreground hover:bg-muted hover:text-foreground flex h-9 w-9 items-center justify-center rounded-md lg:hidden"
           >
             <X className="h-5 w-5" />
           </button>
@@ -241,17 +250,50 @@ export function Sidebar({ open = false, onClose }: SidebarProps) {
 
         {/* Main navigation */}
         <nav className="flex-1 overflow-y-auto px-3 py-3">
-          <p className="mb-1.5 px-3 text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
+          {isPlatformOperator && (
+            <>
+              <p className="text-muted-foreground mb-1.5 px-3 text-[10px] font-semibold tracking-wider uppercase">
+                {legalRole === 'platform_ops'
+                  ? 'Mega Super Admin'
+                  : 'Super Admin · Revenda White Label'}
+              </p>
+              <ul className="flex flex-col gap-0.5">
+                {platformNavItems.map((item) => {
+                  const isActive =
+                    pathname === item.href ||
+                    pathname.startsWith(`${item.href}/`);
+                  return (
+                    <li key={`platform-${item.href}`}>
+                      <Link
+                        href={item.href}
+                        className={cn(
+                          'flex items-center gap-2.5 rounded-lg px-3 py-2 text-sm font-medium transition-colors lg:py-1.5',
+                          isActive
+                            ? 'bg-primary/10 text-primary'
+                            : 'text-muted-foreground hover:bg-muted hover:text-foreground'
+                        )}
+                      >
+                        <item.icon className="h-4 w-4 shrink-0" />
+                        <span className="truncate">{item.labelPt}</span>
+                      </Link>
+                    </li>
+                  );
+                })}
+              </ul>
+              <div className="border-border my-3 border-t" />
+            </>
+          )}
+          <p className="text-muted-foreground mb-1.5 px-3 text-[10px] font-semibold tracking-wider uppercase">
             Operação Jurídica
           </p>
           <ul className="flex flex-col gap-0.5">
             {legalCoreNavItems.map((item) => {
               const isActive =
                 pathname === item.href ||
-                (item.href !== "/dashboard" && pathname.startsWith(item.href));
+                (item.href !== '/dashboard' && pathname.startsWith(item.href));
 
               const showUnreadDot =
-                item.href === "/inbox" && totalUnread > 0 && !isActive;
+                item.href === '/inbox' && totalUnread > 0 && !isActive;
 
               const label = item.labelPt ?? t(item.labelKey as string);
 
@@ -260,21 +302,23 @@ export function Sidebar({ open = false, onClose }: SidebarProps) {
                   <Link
                     href={item.href}
                     className={cn(
-                      "flex items-center gap-2.5 rounded-lg px-3 py-2 text-sm font-medium transition-colors lg:py-1.5",
+                      'flex items-center gap-2.5 rounded-lg px-3 py-2 text-sm font-medium transition-colors lg:py-1.5',
                       isActive
-                        ? "bg-primary/10 text-primary"
-                        : "text-muted-foreground hover:bg-muted hover:text-foreground",
+                        ? 'bg-primary/10 text-primary'
+                        : 'text-muted-foreground hover:bg-muted hover:text-foreground'
                     )}
                   >
                     <item.icon className="h-4 w-4 shrink-0" />
                     <span className="flex-1 truncate">{label}</span>
                     {showUnreadDot && (
                       <span
-                        aria-label={t("unreadConversations", { count: totalUnread })}
+                        aria-label={t('unreadConversations', {
+                          count: totalUnread,
+                        })}
                         className="relative flex h-2 w-2"
                       >
-                        <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-primary opacity-75" />
-                        <span className="relative inline-flex h-2 w-2 rounded-full bg-primary" />
+                        <span className="bg-primary absolute inline-flex h-full w-full animate-ping rounded-full opacity-75" />
+                        <span className="bg-primary relative inline-flex h-2 w-2 rounded-full" />
                       </span>
                     )}
                   </Link>
@@ -283,15 +327,15 @@ export function Sidebar({ open = false, onClose }: SidebarProps) {
             })}
           </ul>
 
-          <div className="my-3 border-t border-border" />
-          <p className="mb-1.5 px-3 text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
+          <div className="border-border my-3 border-t" />
+          <p className="text-muted-foreground mb-1.5 px-3 text-[10px] font-semibold tracking-wider uppercase">
             Canais &amp; WACRM
           </p>
           <ul className="flex flex-col gap-0.5">
             {waChannelNavItems.map((item) => {
               const isActive = pathname.startsWith(item.href);
               const showNotificationBadge =
-                item.href === "/notifications" && unreadNotifications > 0;
+                item.href === '/notifications' && unreadNotifications > 0;
               const label = item.labelPt ?? t(item.labelKey as string);
 
               return (
@@ -299,28 +343,30 @@ export function Sidebar({ open = false, onClose }: SidebarProps) {
                   <Link
                     href={item.href}
                     className={cn(
-                      "flex items-center gap-2.5 rounded-lg px-3 py-2 text-sm font-medium transition-colors lg:py-1.5",
+                      'flex items-center gap-2.5 rounded-lg px-3 py-2 text-sm font-medium transition-colors lg:py-1.5',
                       isActive
-                        ? "bg-primary/10 text-primary"
-                        : "text-muted-foreground hover:bg-muted hover:text-foreground",
+                        ? 'bg-primary/10 text-primary'
+                        : 'text-muted-foreground hover:bg-muted hover:text-foreground'
                     )}
                   >
                     <item.icon className="h-4 w-4 shrink-0" />
                     <span className="flex-1 truncate">{label}</span>
                     {item.beta && (
                       <span
-                        aria-label={t("beta")}
-                        className="rounded-full border border-primary/40 bg-primary/10 px-1.5 py-0.5 text-[9px] font-semibold uppercase tracking-wider text-primary"
+                        aria-label={t('beta')}
+                        className="border-primary/40 bg-primary/10 text-primary rounded-full border px-1.5 py-0.5 text-[9px] font-semibold tracking-wider uppercase"
                       >
-                        {t("beta")}
+                        {t('beta')}
                       </span>
                     )}
                     {showNotificationBadge && (
                       <span
-                        aria-label={t("unreadNotifications", { count: unreadNotifications })}
-                        className="flex h-5 min-w-5 items-center justify-center rounded-full bg-primary px-1 text-[10px] font-semibold text-primary-foreground"
+                        aria-label={t('unreadNotifications', {
+                          count: unreadNotifications,
+                        })}
+                        className="bg-primary text-primary-foreground flex h-5 min-w-5 items-center justify-center rounded-full px-1 text-[10px] font-semibold"
                       >
-                        {unreadNotifications > 9 ? "9+" : unreadNotifications}
+                        {unreadNotifications > 9 ? '9+' : unreadNotifications}
                       </span>
                     )}
                   </Link>
@@ -329,7 +375,7 @@ export function Sidebar({ open = false, onClose }: SidebarProps) {
             })}
           </ul>
 
-          <div className="my-4 border-t border-border" />
+          <div className="border-border my-4 border-t" />
 
           <ul className="flex flex-col gap-1">
             {bottomNavItems.map((item) => {
@@ -339,10 +385,10 @@ export function Sidebar({ open = false, onClose }: SidebarProps) {
                   <Link
                     href={item.href}
                     className={cn(
-                      "flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-colors lg:py-2",
+                      'flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-colors lg:py-2',
                       isActive
-                        ? "bg-primary/10 text-primary"
-                        : "text-muted-foreground hover:bg-muted hover:text-foreground",
+                        ? 'bg-primary/10 text-primary'
+                        : 'text-muted-foreground hover:bg-muted hover:text-foreground'
                     )}
                   >
                     <item.icon className="h-4 w-4" />
@@ -355,7 +401,7 @@ export function Sidebar({ open = false, onClose }: SidebarProps) {
         </nav>
 
         {/* User section */}
-        <div className="shrink-0 border-t border-border p-3">
+        <div className="border-border shrink-0 border-t p-3">
           {/* Account name display — surfaced only when the account
               name differs from the user's own name (see
               `showAccountStrip`). For a default solo account the two
@@ -363,7 +409,7 @@ export function Sidebar({ open = false, onClose }: SidebarProps) {
               below; for renamed or shared accounts it tells the user
               which account they're acting in. */}
           {showAccountStrip && account?.name ? (
-            <div className="mb-2 flex items-center gap-2 px-3 text-xs text-muted-foreground">
+            <div className="text-muted-foreground mb-2 flex items-center gap-2 px-3 text-xs">
               <UsersRound className="size-3.5 shrink-0" />
               {/* `title=` exposes the full name on hover when it
                   gets truncated (long account names + narrow
@@ -371,47 +417,49 @@ export function Sidebar({ open = false, onClose }: SidebarProps) {
               <span className="truncate" title={account.name}>
                 {account.name}
               </span>
-              {accountRole ? (
-                // Always render the chip — owners used to be
-                // invisible here, which made them indistinguishable
-                // from admins at a glance. Now everyone sees their
-                // role (with a colour cue) regardless of tier.
-                (() => {
-                  const meta = ROLE_CHIP[accountRole];
-                  const Icon = meta.icon;
-                  return (
-                    <span
-                      className={`ml-auto inline-flex shrink-0 items-center gap-1 rounded-full border px-1.5 py-0.5 text-[10px] font-medium uppercase tracking-wider ${meta.className}`}
-                    >
-                      <Icon className="size-3" />
-                      {t(meta.labelKey as string)}
-                    </span>
-                  );
-                })()
-              ) : null}
+              {accountRole
+                ? // Always render the chip — owners used to be
+                  // invisible here, which made them indistinguishable
+                  // from admins at a glance. Now everyone sees their
+                  // role (with a colour cue) regardless of tier.
+                  (() => {
+                    const meta = ROLE_CHIP[accountRole];
+                    const Icon = meta.icon;
+                    return (
+                      <span
+                        className={`ml-auto inline-flex shrink-0 items-center gap-1 rounded-full border px-1.5 py-0.5 text-[10px] font-medium tracking-wider uppercase ${meta.className}`}
+                      >
+                        <Icon className="size-3" />
+                        {legalRole
+                          ? LEGAL_ROLE_LABELS[legalRole]
+                          : t(meta.labelKey as string)}
+                      </span>
+                    );
+                  })()
+                : null}
             </div>
           ) : null}
           <DropdownMenu>
-            <DropdownMenuTrigger className="flex w-full items-center gap-3 rounded-lg px-3 py-2 text-left transition-colors hover:bg-muted/60 focus:bg-muted/60 focus:outline-none data-popup-open:bg-muted/60">
+            <DropdownMenuTrigger className="hover:bg-muted/60 focus:bg-muted/60 data-popup-open:bg-muted/60 flex w-full items-center gap-3 rounded-lg px-3 py-2 text-left transition-colors focus:outline-none">
               <Avatar className="size-8 shrink-0">
                 {profile?.avatar_url ? (
                   <AvatarImage
                     src={profile.avatar_url}
-                    alt={profile.full_name ?? t("defaultAvatar")}
+                    alt={profile.full_name ?? t('defaultAvatar')}
                   />
                 ) : null}
-                <AvatarFallback className="bg-primary/10 text-sm font-medium text-primary">
+                <AvatarFallback className="bg-primary/10 text-primary text-sm font-medium">
                   {profile?.full_name?.charAt(0)?.toUpperCase() ??
                     profile?.email?.charAt(0)?.toUpperCase() ??
-                    "U"}
+                    'U'}
                 </AvatarFallback>
               </Avatar>
               <div className="min-w-0 flex-1">
-                <p className="truncate text-sm font-medium text-foreground">
-                  {profile?.full_name ?? t("defaultUser")}
+                <p className="text-foreground truncate text-sm font-medium">
+                  {profile?.full_name ?? t('defaultUser')}
                 </p>
-                <p className="truncate text-xs text-muted-foreground">
-                  {profile?.email ?? ""}
+                <p className="text-muted-foreground truncate text-xs">
+                  {profile?.email ?? ''}
                 </p>
               </div>
             </DropdownMenuTrigger>
@@ -419,7 +467,7 @@ export function Sidebar({ open = false, onClose }: SidebarProps) {
               align="end"
               side="top"
               sideOffset={6}
-              className="min-w-56 bg-popover text-popover-foreground ring-border"
+              className="bg-popover text-popover-foreground ring-border min-w-56"
             >
               <DropdownMenuItem
                 render={
@@ -431,7 +479,7 @@ export function Sidebar({ open = false, onClose }: SidebarProps) {
                 }
               >
                 <User className="size-4" />
-                {t("menuProfile")}
+                {t('menuProfile')}
               </DropdownMenuItem>
               <DropdownMenuItem
                 render={
@@ -443,7 +491,7 @@ export function Sidebar({ open = false, onClose }: SidebarProps) {
                 }
               >
                 <Settings className="size-4" />
-                {t("menuSettings")}
+                {t('menuSettings')}
               </DropdownMenuItem>
               <DropdownMenuSeparator className="bg-border" />
               <DropdownMenuItem
@@ -451,7 +499,7 @@ export function Sidebar({ open = false, onClose }: SidebarProps) {
                 className="text-popover-foreground focus:bg-accent focus:text-accent-foreground"
               >
                 <LogOut className="size-4" />
-                {t("menuSignOut")}
+                {t('menuSignOut')}
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>

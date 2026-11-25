@@ -3,95 +3,102 @@
 // ============================================================
 
 export type LegalRole =
-  | "platform_ops"
-  | "partner_admin"
-  | "coordinator"
-  | "lawyer"
-  | "assistant"
-  | "reception"
-  | "finance"
-  | "client"
-  | "auditor";
+  | 'platform_ops'
+  | 'reseller_admin'
+  | 'partner_admin'
+  | 'coordinator'
+  | 'lawyer'
+  | 'assistant'
+  | 'secretary'
+  | 'reception'
+  | 'finance'
+  | 'client'
+  | 'auditor';
 
 export const LEGAL_ROLES: readonly LegalRole[] = [
-  "platform_ops",
-  "partner_admin",
-  "coordinator",
-  "lawyer",
-  "assistant",
-  "reception",
-  "finance",
-  "client",
-  "auditor",
+  'platform_ops',
+  'reseller_admin',
+  'partner_admin',
+  'coordinator',
+  'lawyer',
+  'assistant',
+  'secretary',
+  'reception',
+  'finance',
+  'client',
+  'auditor',
 ] as const;
 
 export const LEGAL_ROLE_LABELS: Record<LegalRole, string> = {
-  platform_ops: "Operação SaaS",
-  partner_admin: "Sócio / Administrador",
-  coordinator: "Coordenador / Controller",
-  lawyer: "Advogado",
-  assistant: "Assistente / Estagiário",
-  reception: "Recepção / Comercial",
-  finance: "Financeiro",
-  client: "Cliente / Representante",
-  auditor: "Auditor Autorizado",
+  platform_ops: 'Operação SaaS',
+  reseller_admin: 'Super Admin / Revenda White Label',
+  partner_admin: 'Sócio / Administrador',
+  coordinator: 'Coordenador / Controller',
+  lawyer: 'Advogado',
+  assistant: 'Assistente / Estagiário',
+  secretary: 'Secretaria',
+  reception: 'Recepção / Comercial',
+  finance: 'Financeiro',
+  client: 'Cliente / Representante',
+  auditor: 'Auditor Autorizado',
 };
 
 export type PracticeArea =
-  | "civel"
-  | "familia"
-  | "trabalhista"
-  | "previdenciario"
-  | "criminal"
-  | "empresarial"
-  | "tributario"
-  | "consumidor"
-  | "consultivo";
+  | 'civel'
+  | 'familia'
+  | 'trabalhista'
+  | 'previdenciario'
+  | 'criminal'
+  | 'empresarial'
+  | 'tributario'
+  | 'consumidor'
+  | 'consultivo';
 
 export const PRACTICE_AREAS: readonly PracticeArea[] = [
-  "civel",
-  "familia",
-  "trabalhista",
-  "previdenciario",
-  "criminal",
-  "empresarial",
-  "tributario",
-  "consumidor",
-  "consultivo",
+  'civel',
+  'familia',
+  'trabalhista',
+  'previdenciario',
+  'criminal',
+  'empresarial',
+  'tributario',
+  'consumidor',
+  'consultivo',
 ] as const;
 
 export const PRACTICE_AREA_LABELS: Record<PracticeArea, string> = {
-  civel: "Cível",
-  familia: "Família e Sucessões",
-  trabalhista: "Trabalhista",
-  previdenciario: "Previdenciário",
-  criminal: "Criminal",
-  empresarial: "Empresarial",
-  tributario: "Tributário",
-  consumidor: "Consumidor",
-  consultivo: "Consultivo",
+  civel: 'Cível',
+  familia: 'Família e Sucessões',
+  trabalhista: 'Trabalhista',
+  previdenciario: 'Previdenciário',
+  criminal: 'Criminal',
+  empresarial: 'Empresarial',
+  tributario: 'Tributário',
+  consumidor: 'Consumidor',
+  consultivo: 'Consultivo',
 };
 
 export type MatterType =
-  | "judicial"
-  | "extrajudicial"
-  | "consultoria"
-  | "parecer"
-  | "negociacao"
-  | "cartorio"
-  | "administrativo";
+  | 'judicial'
+  | 'extrajudicial'
+  | 'consultoria'
+  | 'parecer'
+  | 'negociacao'
+  | 'cartorio'
+  | 'administrativo';
 
 export const MATTER_TYPE_LABELS: Record<MatterType, string> = {
-  judicial: "Judicial",
-  extrajudicial: "Extrajudicial",
-  consultoria: "Consultoria",
-  parecer: "Parecer",
-  negociacao: "Negociação",
-  cartorio: "Cartório",
-  administrativo: "Contencioso Administrativo",
+  judicial: 'Judicial',
+  extrajudicial: 'Extrajudicial',
+  consultoria: 'Consultoria',
+  parecer: 'Parecer',
+  negociacao: 'Negociação',
+  cartorio: 'Cartório',
+  administrativo: 'Contencioso Administrativo',
 };
 
-export type ConfidentialityLevel = "publico_portal" | "interno" | "restrito" | "sigiloso";
+export type ConfidentialityLevel =
+  'publico_portal' | 'interno' | 'restrito' | 'sigiloso';
 
 export interface OfficeUnit {
   id: string;
@@ -135,7 +142,7 @@ export interface BreakGlassGrant {
   operator_user_id: string;
   authorized_by_user_id: string;
   reason: string;
-  scope: "diagnostics" | "support_read" | "incident_recovery";
+  scope: 'diagnostics' | 'support_read' | 'incident_recovery';
   matter_id?: string | null;
   starts_at: string;
   expires_at: string;
@@ -146,7 +153,7 @@ export interface PersonEntity {
   id: string;
   account_id: string;
   contact_id?: string | null;
-  person_type: "PF" | "PJ";
+  person_type: 'PF' | 'PJ';
   full_name: string;
   normalized_name: string;
   aliases: string[];
@@ -169,20 +176,20 @@ export interface PersonEntity {
 }
 
 export type IntakeStage =
-  | "triagem"
-  | "conflito"
-  | "consulta"
-  | "proposta"
-  | "contratacao"
-  | "convertido"
-  | "arquivado";
+  | 'triagem'
+  | 'conflito'
+  | 'consulta'
+  | 'proposta'
+  | 'contratacao'
+  | 'convertido'
+  | 'arquivado';
 
 export type ConflictStatus =
-  | "nao_verificado"
-  | "pendente_revisao"
-  | "liberado"
-  | "liberado_com_excecao"
-  | "bloqueado";
+  | 'nao_verificado'
+  | 'pendente_revisao'
+  | 'liberado'
+  | 'liberado_com_excecao'
+  | 'bloqueado';
 
 export interface LegalIntake {
   id: string;
@@ -193,9 +200,10 @@ export interface LegalIntake {
   client_entity_id?: string | null;
   assigned_user_id?: string | null;
   title: string;
-  origin_channel: "whatsapp" | "formulario" | "email" | "telefone" | "indicacao" | "manual";
+  origin_channel:
+    'whatsapp' | 'formulario' | 'email' | 'telefone' | 'indicacao' | 'manual';
   practice_area: PracticeArea;
-  reported_urgency: "baixa" | "media" | "alta" | "critica";
+  reported_urgency: 'baixa' | 'media' | 'alta' | 'critica';
   queue_name: string;
   business_hours_received: boolean;
   sla_due_at?: string | null;
@@ -221,16 +229,16 @@ export interface ConflictCandidate {
   matched_entity_id?: string | null;
   matched_matter_id?: string | null;
   match_type:
-    | "identificador_exato"
-    | "nome_normalizado"
-    | "similaridade"
-    | "alias"
-    | "grupo_economico"
-    | "parte_adversa";
+    | 'identificador_exato'
+    | 'nome_normalizado'
+    | 'similaridade'
+    | 'alias'
+    | 'grupo_economico'
+    | 'parte_adversa';
   similarity_score: number;
   is_under_secrecy: boolean;
   minimal_signal: string;
-  disposition: "pendente" | "falso_positivo" | "conflito_real" | "excecao";
+  disposition: 'pendente' | 'falso_positivo' | 'conflito_real' | 'excecao';
 }
 
 export interface ConflictCheck {
@@ -238,17 +246,18 @@ export interface ConflictCheck {
   account_id: string;
   intake_id?: string | null;
   matter_id?: string | null;
-  trigger_reason: "triagem" | "nova_contraparte" | "mudanca_escopo" | "revisao_periodica";
+  trigger_reason:
+    'triagem' | 'nova_contraparte' | 'mudanca_escopo' | 'revisao_periodica';
   query_name: string;
   query_document_normalized?: string | null;
   query_aliases: string[];
   query_economic_group?: string | null;
   status:
-    | "sem_conflito"
-    | "pendente_revisao"
-    | "falso_positivo"
-    | "conflito_confirmado"
-    | "excecao_autorizada";
+    | 'sem_conflito'
+    | 'pendente_revisao'
+    | 'falso_positivo'
+    | 'conflito_confirmado'
+    | 'excecao_autorizada';
   decision_justification?: string | null;
   evidence_summary?: string | null;
   requested_by_user_id?: string | null;
@@ -260,7 +269,7 @@ export interface ConflictCheck {
 
 export interface MatterAccessGrant {
   user_id: string;
-  access_level: "read" | "read_write" | "admin";
+  access_level: 'read' | 'read_write' | 'admin';
   granted_by_user_id?: string | null;
   reason?: string | null;
   expires_at?: string | null;
@@ -271,12 +280,12 @@ export interface MatterMember {
   user_id: string;
   full_name: string;
   member_role:
-    | "responsavel"
-    | "coordenador"
-    | "advogado"
-    | "assistente"
-    | "correspondente_externo"
-    | "auditor";
+    | 'responsavel'
+    | 'coordenador'
+    | 'advogado'
+    | 'assistente'
+    | 'correspondente_externo'
+    | 'auditor';
   can_view_strategy: boolean;
   is_active: boolean;
   access_expires_at?: string | null;
@@ -287,17 +296,17 @@ export interface MatterParty {
   id: string;
   entity_id: string;
   entity_name: string;
-  person_type: "PF" | "PJ";
+  person_type: 'PF' | 'PJ';
   party_role:
-    | "cliente"
-    | "autor"
-    | "reu"
-    | "representante"
-    | "contraparte"
-    | "advogado_adverso"
-    | "testemunha"
-    | "perito"
-    | "terceiro_interessado";
+    | 'cliente'
+    | 'autor'
+    | 'reu'
+    | 'representante'
+    | 'contraparte'
+    | 'advogado_adverso'
+    | 'testemunha'
+    | 'perito'
+    | 'terceiro_interessado';
   is_primary: boolean;
   poa_registered: boolean;
   poa_valid_until?: string | null;
@@ -332,21 +341,21 @@ export interface Matter {
   matter_type: MatterType;
   practice_area: PracticeArea;
   status:
-    | "triagem"
-    | "ativo"
-    | "aguardando_cliente"
-    | "suspenso"
-    | "encerramento_pendente"
-    | "encerrado"
-    | "arquivado";
-  priority: "baixa" | "media" | "alta" | "urgente";
+    | 'triagem'
+    | 'ativo'
+    | 'aguardando_cliente'
+    | 'suspenso'
+    | 'encerramento_pendente'
+    | 'encerrado'
+    | 'arquivado';
+  priority: 'baixa' | 'media' | 'alta' | 'urgente';
   object_description?: string | null;
   restricted_strategy?: string | null;
   next_step?: string | null;
   claim_value_cents?: number | null;
   lead_lawyer_user_id?: string | null;
   is_restricted: boolean;
-  confidentiality_level: "interno" | "restrito" | "sigiloso";
+  confidentiality_level: 'interno' | 'restrito' | 'sigiloso';
   members: MatterMember[];
   access_grants: MatterAccessGrant[];
   parties: MatterParty[];
@@ -361,19 +370,19 @@ export interface Matter {
 }
 
 export type SyncStatus =
-  | "ok"
-  | "atrasado"
-  | "sem_resultado"
-  | "parcial"
-  | "erro_auth"
-  | "rate_limited"
-  | "indisponivel"
-  | "homologacao"
-  | "pendente";
+  | 'ok'
+  | 'atrasado'
+  | 'sem_resultado'
+  | 'parcial'
+  | 'erro_auth'
+  | 'rate_limited'
+  | 'indisponivel'
+  | 'homologacao'
+  | 'pendente';
 
 export interface CaseSourceRecord {
   id: string;
-  source_name: "datajud" | "djen" | "dje" | "eproc" | "pje" | "esaj" | "manual";
+  source_name: 'datajud' | 'djen' | 'dje' | 'eproc' | 'pje' | 'esaj' | 'manual';
   source_record_id: string;
   tribunal_alias?: string | null;
   degree: string;
@@ -409,14 +418,28 @@ export interface CourtCase {
   tribunal_alias?: string | null;
   degree: string;
   court_organ: string;
-  judicial_system: "datajud" | "eproc" | "pje" | "esaj" | "projudi" | "administrativo" | "manual";
+  judicial_system:
+    | 'datajud'
+    | 'eproc'
+    | 'pje'
+    | 'esaj'
+    | 'projudi'
+    | 'administrativo'
+    | 'manual';
   case_class?: string | null;
   subjects: string[];
   filing_date?: string | null;
-  case_status: "ativo" | "suspenso" | "arquivado" | "baixado" | "sobrestado";
+  case_status: 'ativo' | 'suspenso' | 'arquivado' | 'baixado' | 'sobrestado';
   is_sealed: boolean;
   parent_case_id?: string | null;
-  relation_type?: "principal" | "incidente" | "recurso" | "cumprimento_sentenca" | "execucao" | "cautelar" | null;
+  relation_type?:
+    | 'principal'
+    | 'incidente'
+    | 'recurso'
+    | 'cumprimento_sentenca'
+    | 'execucao'
+    | 'cautelar'
+    | null;
   source_records: CaseSourceRecord[];
   movements: CaseMovement[];
   is_fixture?: boolean;
@@ -429,13 +452,21 @@ export interface LegalCommunication {
   matter_id?: string | null;
   case_id?: string | null;
   communication_kind:
-    | "movimentacao"
-    | "publicacao"
-    | "intimacao"
-    | "citacao"
-    | "ciencia"
-    | "evento_interno";
-  source_name: "datajud" | "djen" | "dje" | "eproc" | "pje" | "esaj" | "upload_arquivo" | "manual";
+    | 'movimentacao'
+    | 'publicacao'
+    | 'intimacao'
+    | 'citacao'
+    | 'ciencia'
+    | 'evento_interno';
+  source_name:
+    | 'datajud'
+    | 'djen'
+    | 'dje'
+    | 'eproc'
+    | 'pje'
+    | 'esaj'
+    | 'upload_arquivo'
+    | 'manual';
   external_identifier?: string | null;
   dedup_hash: string;
   official_link?: string | null;
@@ -444,7 +475,8 @@ export interface LegalCommunication {
   acknowledgement_date?: string | null;
   collected_at: string;
   received_out_of_order: boolean;
-  queue_status: "nova" | "classificada" | "em_revisao" | "vinculada" | "descartada";
+  queue_status:
+    'nova' | 'classificada' | 'em_revisao' | 'vinculada' | 'descartada';
   summary: string;
   content_excerpt?: string | null;
   disposition_justification?: string | null;
@@ -453,31 +485,31 @@ export interface LegalCommunication {
 }
 
 export type DeadlineStatus =
-  | "sugerido"
-  | "em_revisao"
-  | "confirmado"
-  | "cumprido"
-  | "cancelado"
-  | "recalculado";
+  | 'sugerido'
+  | 'em_revisao'
+  | 'confirmado'
+  | 'cumprido'
+  | 'cancelado'
+  | 'recalculado';
 
 export type ProceduralRegime =
-  | "cpc_dias_uteis"
-  | "penal_dias_corridos"
-  | "trabalhista_clt"
-  | "administrativo"
-  | "manual";
+  | 'cpc_dias_uteis'
+  | 'penal_dias_corridos'
+  | 'trabalhista_clt'
+  | 'administrativo'
+  | 'manual';
 
 export interface CalendarException {
   id: string;
   date: string; // YYYY-MM-DD
   end_date?: string | null;
   type:
-    | "feriado_nacional"
-    | "feriado_estadual"
-    | "feriado_municipal"
-    | "suspensao_prazos"
-    | "recesso_forense"
-    | "indisponibilidade_sistema";
+    | 'feriado_nacional'
+    | 'feriado_estadual'
+    | 'feriado_municipal'
+    | 'suspensao_prazos'
+    | 'recesso_forense'
+    | 'indisponibilidade_sistema';
   description: string;
   official_act_reference?: string | null;
 }
@@ -515,7 +547,8 @@ export interface LegalDeadline {
   communication_id?: string | null;
   calendar_id?: string | null;
   title: string;
-  nature: "processual" | "material" | "administrativo" | "contratual" | "interno";
+  nature:
+    'processual' | 'material' | 'administrativo' | 'contratual' | 'interno';
   procedural_regime: ProceduralRegime;
   rule_code: string;
   rule_version: string;
@@ -541,7 +574,12 @@ export interface LegalDeadline {
   evidence_note?: string | null;
   revision_number: number;
   revisions: DeadlineRevision[];
-  alert_history: Array<{ id: string; channel: string; scheduled_for: string; status: string }>;
+  alert_history: Array<{
+    id: string;
+    channel: string;
+    scheduled_for: string;
+    status: string;
+  }>;
 }
 
 export interface LegalHearing {
@@ -549,17 +587,29 @@ export interface LegalHearing {
   account_id: string;
   matter_id: string;
   case_id?: string | null;
-  event_type: "audiencia" | "reuniao" | "sustentacao" | "pericia" | "diligencia" | "consulta";
+  event_type:
+    | 'audiencia'
+    | 'reuniao'
+    | 'sustentacao'
+    | 'pericia'
+    | 'diligencia'
+    | 'consulta';
   title: string;
   public_minimal_summary: string;
   starts_at: string;
   ends_at: string;
   timezone: string;
-  modality: "presencial" | "remota" | "hibrida";
+  modality: 'presencial' | 'remota' | 'hibrida';
   location_or_link?: string | null;
   participants: string[];
   preparation_notes?: string | null;
-  status: "agendada" | "confirmada" | "redesignada" | "realizada" | "ausencia" | "cancelada";
+  status:
+    | 'agendada'
+    | 'confirmada'
+    | 'redesignada'
+    | 'realizada'
+    | 'ausencia'
+    | 'cancelada';
   responsible_user_id?: string | null;
 }
 
@@ -573,8 +623,8 @@ export interface LegalTask {
   assigned_user_id?: string | null;
   created_by_user_id?: string | null;
   title: string;
-  priority: "baixa" | "media" | "alta" | "urgente";
-  status: "a_fazer" | "em_andamento" | "em_revisao" | "concluida" | "cancelada";
+  priority: 'baixa' | 'media' | 'alta' | 'urgente';
+  status: 'a_fazer' | 'em_andamento' | 'em_revisao' | 'concluida' | 'cancelada';
   due_date?: string | null;
   estimated_minutes: number;
   logged_minutes: number;
@@ -587,7 +637,13 @@ export interface ProtocolReceipt {
   matter_id: string;
   case_id?: string | null;
   protocol_number: string;
-  protocol_type: "peticao" | "recurso" | "manifestacao" | "juntada" | "administrativo" | "cartorio";
+  protocol_type:
+    | 'peticao'
+    | 'recurso'
+    | 'manifestacao'
+    | 'juntada'
+    | 'administrativo'
+    | 'cartorio';
   system_name: string;
   filed_at: string;
   filed_by_user_id: string;
@@ -598,14 +654,20 @@ export interface ProtocolReceipt {
 
 export interface LegalDocumentVersion {
   version_number: number;
-  artifact_kind: "original" | "derivado_pdf" | "ocr_pesquisavel" | "comprovante" | "publicado";
+  artifact_kind:
+    | 'original'
+    | 'derivado_pdf'
+    | 'ocr_pesquisavel'
+    | 'comprovante'
+    | 'publicado';
   filename: string;
   mime_type: string;
   size_bytes: number;
   sha256_hash: string;
   storage_path: string;
   origin_source: string;
-  ocr_status: "nao_aplicavel" | "pendente" | "homologacao" | "concluido" | "falhou";
+  ocr_status:
+    'nao_aplicavel' | 'pendente' | 'homologacao' | 'concluido' | 'falhou';
   created_at: string;
 }
 
@@ -615,17 +677,17 @@ export interface LegalDocument {
   matter_id: string;
   title: string;
   category:
-    | "procuracao"
-    | "contrato"
-    | "peca"
-    | "prova"
-    | "comprovante"
-    | "decisao"
-    | "certidao"
-    | "parecer"
-    | "outros";
+    | 'procuracao'
+    | 'contrato'
+    | 'peca'
+    | 'prova'
+    | 'comprovante'
+    | 'decisao'
+    | 'certidao'
+    | 'parecer'
+    | 'outros';
   confidentiality_level: ConfidentialityLevel;
-  quarantine_status: "quarentena" | "aprovado" | "bloqueado";
+  quarantine_status: 'quarentena' | 'aprovado' | 'bloqueado';
   tags: string[];
   retention_until?: string | null;
   portal_published: boolean;
@@ -636,7 +698,7 @@ export interface LegalDocument {
 export interface DocumentTemplateField {
   key: string;
   label: string;
-  type: "text" | "date" | "currency_cents" | "cpf_cnpj" | "email";
+  type: 'text' | 'date' | 'currency_cents' | 'cpf_cnpj' | 'email';
   required: boolean;
 }
 
@@ -645,31 +707,31 @@ export interface LegalDocumentTemplate {
   account_id: string;
   name: string;
   template_type:
-    | "proposta"
-    | "contrato_honorarios"
-    | "aditivo"
-    | "distrato"
-    | "procuracao"
-    | "substabelecimento"
-    | "autorizacao"
-    | "peca";
+    | 'proposta'
+    | 'contrato_honorarios'
+    | 'aditivo'
+    | 'distrato'
+    | 'procuracao'
+    | 'substabelecimento'
+    | 'autorizacao'
+    | 'peca';
   practice_area: PracticeArea;
   current_version: number;
-  status: "rascunho" | "revisao" | "aprovado" | "arquivado";
+  status: 'rascunho' | 'revisao' | 'aprovado' | 'arquivado';
   body_template: string;
   typed_fields: DocumentTemplateField[];
   approved_by_user_id?: string | null;
 }
 
 export type ContractStatus =
-  | "rascunho"
-  | "revisao"
-  | "aprovado"
-  | "enviado"
-  | "assinado"
-  | "recusado"
-  | "expirado"
-  | "cancelado";
+  | 'rascunho'
+  | 'revisao'
+  | 'aprovado'
+  | 'enviado'
+  | 'assinado'
+  | 'recusado'
+  | 'expirado'
+  | 'cancelado';
 
 export interface LegalContract {
   id: string;
@@ -678,22 +740,36 @@ export interface LegalContract {
   parent_contract_id?: string | null;
   contract_number: string;
   title: string;
-  contract_kind: "honorarios" | "aditivo" | "distrato" | "procuracao" | "consultoria_recorrente";
+  contract_kind:
+    | 'honorarios'
+    | 'aditivo'
+    | 'distrato'
+    | 'procuracao'
+    | 'consultoria_recorrente';
   scope_description: string;
-  fee_model: "fixo" | "parcelado" | "recorrente" | "exito" | "misto";
+  fee_model: 'fixo' | 'parcelado' | 'recorrente' | 'exito' | 'misto';
   total_value_cents: number;
   installments_count: number;
   success_fee_percent?: number | null;
   success_fee_condition?: string | null;
   success_condition_validated?: boolean;
-  signature_method: "eletronica_simples" | "eletronica_avancada" | "icp_brasil" | "manual_comprovado";
-  signature_provider: "documenso" | "manual";
+  signature_method:
+    | 'eletronica_simples'
+    | 'eletronica_avancada'
+    | 'icp_brasil'
+    | 'manual_comprovado';
+  signature_provider: 'documenso' | 'manual';
   status: ContractStatus;
   receivables_generated: boolean;
   signed_at?: string | null;
   manual_evidence_hash?: string | null;
   manual_evidence_note?: string | null;
-  signers: Array<{ name: string; email: string; role: string; signed_at?: string | null }>;
+  signers: Array<{
+    name: string;
+    email: string;
+    role: string;
+    signed_at?: string | null;
+  }>;
   created_at: string;
 }
 
@@ -701,7 +777,8 @@ export interface ClientFundAccount {
   id: string;
   account_id: string;
   name: string;
-  account_kind: "escritorio_propria" | "terceiros_clientes" | "custas_reembolsaveis";
+  account_kind:
+    'escritorio_propria' | 'terceiros_clientes' | 'custas_reembolsaveis';
   bank_name: string;
   balance_cents: number;
 }
@@ -713,9 +790,10 @@ export interface Installment {
   due_date: string;
   amount_cents: number;
   paid_cents: number;
-  status: "aberto" | "parcial" | "pago" | "estornado" | "cancelado" | "atrasado";
-  billing_provider: "manual" | "pix_adapter" | "boleto_adapter";
-  nfse_status: "nao_emitida" | "homologacao" | "emitida" | "cancelada";
+  status:
+    'aberto' | 'parcial' | 'pago' | 'estornado' | 'cancelado' | 'atrasado';
+  billing_provider: 'manual' | 'pix_adapter' | 'boleto_adapter';
+  nfse_status: 'nao_emitida' | 'homologacao' | 'emitida' | 'cancelada';
 }
 
 export interface Receivable {
@@ -724,12 +802,17 @@ export interface Receivable {
   matter_id: string;
   contract_id?: string | null;
   fund_account_id: string;
-  revenue_class: "receita_propria" | "valor_terceiros" | "credito_a_receber" | "reembolso_custas";
+  revenue_class:
+    | 'receita_propria'
+    | 'valor_terceiros'
+    | 'credito_a_receber'
+    | 'reembolso_custas';
   description: string;
   total_cents: number;
   discount_cents: number;
   paid_cents: number;
-  status: "aberto" | "parcial" | "pago" | "estornado" | "cancelado" | "inadimplente";
+  status:
+    'aberto' | 'parcial' | 'pago' | 'estornado' | 'cancelado' | 'inadimplente';
   competence_month: string;
   idempotency_key?: string | null;
   installments: Installment[];
@@ -741,29 +824,29 @@ export interface LegalExpense {
   matter_id?: string | null;
   fund_account_id: string;
   expense_kind:
-    | "despesa_escritorio"
-    | "custa_processual"
-    | "reembolso_cliente"
-    | "repasse_terceiro"
-    | "correspondente";
+    | 'despesa_escritorio'
+    | 'custa_processual'
+    | 'reembolso_cliente'
+    | 'repasse_terceiro'
+    | 'correspondente';
   cost_center: string;
   description: string;
   amount_cents: number;
   due_date: string;
-  status: "aberto" | "pago" | "reembolsado" | "estornado" | "cancelado";
+  status: 'aberto' | 'pago' | 'reembolsado' | 'estornado' | 'cancelado';
 }
 
 export interface PaymentRecord {
   id: string;
   account_id: string;
   fund_account_id: string;
-  direction: "entrada" | "saida";
-  payment_method: "manual" | "pix" | "boleto" | "ted" | "cartao" | "alvara";
+  direction: 'entrada' | 'saida';
+  payment_method: 'manual' | 'pix' | 'boleto' | 'ted' | 'cartao' | 'alvara';
   amount_cents: number;
   paid_at: string;
-  status: "pendente" | "confirmado" | "estornado" | "cancelado";
+  status: 'pendente' | 'confirmado' | 'estornado' | 'cancelado';
   idempotency_key?: string | null;
-  reconciliation_status: "pendente" | "conciliado" | "divergente";
+  reconciliation_status: 'pendente' | 'conciliado' | 'divergente';
   installment_id?: string | null;
   reversal_reason?: string | null;
 }
@@ -775,7 +858,7 @@ export interface PortalInvitation {
   entity_id: string;
   entity_name: string;
   token: string;
-  scope_role: "cliente" | "representante";
+  scope_role: 'cliente' | 'representante';
   is_revoked: boolean;
   revoked_at?: string | null;
   expires_at: string;
@@ -786,13 +869,13 @@ export interface PortalPublication {
   account_id: string;
   matter_id: string;
   publication_type:
-    | "andamento"
-    | "pendencia"
-    | "documento"
-    | "agenda"
-    | "contrato"
-    | "cobranca"
-    | "mensagem";
+    | 'andamento'
+    | 'pendencia'
+    | 'documento'
+    | 'agenda'
+    | 'contrato'
+    | 'cobranca'
+    | 'mensagem';
   title: string;
   body: string;
   contains_sensitive_info: boolean;
@@ -810,7 +893,7 @@ export interface AuditEvent {
   operation: string;
   resource_type: string;
   resource_id?: string | null;
-  outcome: "allowed" | "denied" | "failed";
+  outcome: 'allowed' | 'denied' | 'failed';
   reason?: string | null;
   correlation_id: string;
   metadata?: Record<string, unknown>;
@@ -819,21 +902,22 @@ export interface AuditEvent {
 
 export interface IntegrationStatus {
   provider:
-    | "datajud"
-    | "djen"
-    | "dje"
-    | "eproc"
-    | "pje"
-    | "esaj"
-    | "documenso"
-    | "gotenberg"
-    | "ocrmypdf"
-    | "pix_boleto"
-    | "nfse"
-    | "ai_assist";
+    | 'datajud'
+    | 'djen'
+    | 'dje'
+    | 'eproc'
+    | 'pje'
+    | 'esaj'
+    | 'documenso'
+    | 'gotenberg'
+    | 'ocrmypdf'
+    | 'pix_boleto'
+    | 'nfse'
+    | 'ai_assist';
   label: string;
-  mode: "indisponivel" | "homologacao" | "producao";
-  status: "nao_configurado" | "ativo" | "erro_auth" | "rate_limited" | "indisponivel";
+  mode: 'indisponivel' | 'homologacao' | 'producao';
+  status:
+    'nao_configurado' | 'ativo' | 'erro_auth' | 'rate_limited' | 'indisponivel';
   allow_auto_acknowledgement: boolean;
   manual_fallback_available: boolean;
   last_health_check_at?: string | null;
@@ -845,14 +929,20 @@ export interface DataSubjectRequest {
   account_id: string;
   requester_name: string;
   requester_document_masked: string;
-  request_type: "acesso" | "correcao" | "anonimizacao" | "eliminacao" | "portabilidade" | "revogacao";
+  request_type:
+    | 'acesso'
+    | 'correcao'
+    | 'anonimizacao'
+    | 'eliminacao'
+    | 'portabilidade'
+    | 'revogacao';
   status:
-    | "aberto"
-    | "verificando_identidade"
-    | "em_analise_sigilo"
-    | "atendido"
-    | "parcialmente_atendido"
-    | "indeferido";
+    | 'aberto'
+    | 'verificando_identidade'
+    | 'em_analise_sigilo'
+    | 'atendido'
+    | 'parcialmente_atendido'
+    | 'indeferido';
   identity_verified: boolean;
   third_party_secrecy_reviewed: boolean;
   retention_blocked: boolean;

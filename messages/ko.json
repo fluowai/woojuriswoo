@@ -44,6 +44,8 @@
     "menuSignOut": "로그아웃"
   },
   "Header": {
+    "channels": "채널",
+    "aiAgents": "AI 지원",
     "dashboard": "대시보드",
     "inbox": "인박스",
     "notifications": "알림",

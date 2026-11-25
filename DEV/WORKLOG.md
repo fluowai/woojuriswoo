@@ -1,5 +1,13 @@
 # WooJuris / wacrm — Worklog
 
+## 2026-11-25 — hierarquia SaaS multi-nível
+
+- Evoluída a matriz de papéis para `Mega Super Admin` (`platform_ops`), `Super Admin / Revenda White Label` (`reseller_admin`), `Admin / Sócio do Escritório` (`partner_admin`), Advogado, Secretaria/Estagiário, Atendimento e Financeiro.
+- Adicionada migration `069_saas_role_hierarchy.sql` com os novos papéis sem alterar o isolamento multi-tenant existente; a numeração 068 já era usada pelo banco remoto.
+- Sessão agora carrega `profiles.legal_role`; a sidebar identifica o nível atual e exibe uma área de plataforma para operação SaaS e revendas.
+- Mantidos os módulos jurídicos existentes no menu: inbox/atendimento, clientes, conflitos, pastas, processos, prazos, agenda, documentos, contratos, financeiro, portal, relatórios, equipe, canais e automações.
+- Verificação direcionada: domínio jurídico 13/13 testes passou; `git diff --check` sem erros de whitespace. Typecheck/lint completos excederam 60s no ambiente e ficaram pendentes.
+
 ## 2026-11-25 — catálogo de agentes jurídicos
 
 - Evoluída a aba `/agents` para um catálogo de agentes autônomos de atendimento jurídico.
@@ -33,6 +41,7 @@
 - Root and MCP dependency audits: 0 vulnerabilities.
 - Local server: `http://127.0.0.1:3000` responded with HTTP 200 for login, signup, dashboard, inbox, contacts, matters and reports.
 - Cron authentication: invalid secret correctly returned HTTP 401.
+
 ## 2026-11-25 — Canais WAHA
 
 - Implementada a migration `067_waha_channels.sql` com instâncias por conta, RLS, vínculo com conversas/mensagens e idempotência por mensagem WAHA.

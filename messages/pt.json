@@ -44,6 +44,8 @@
     "menuSignOut": "Sair"
   },
   "Header": {
+    "channels": "Canais",
+    "aiAgents": "IA Assistiva",
     "dashboard": "Painel",
     "inbox": "Caixa de entrada",
     "notifications": "Notificações",

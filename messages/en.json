@@ -44,6 +44,8 @@
     "menuSignOut": "Sign out"
   },
   "Header": {
+    "channels": "Channels",
+    "aiAgents": "AI Assistive",
     "dashboard": "Dashboard",
     "inbox": "Inbox",
     "notifications": "Notifications",

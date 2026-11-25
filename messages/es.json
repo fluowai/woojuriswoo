@@ -44,6 +44,8 @@
     "menuSignOut": "Cerrar sesión"
   },
   "Header": {
+    "channels": "Canales",
+    "aiAgents": "IA Asistiva",
     "dashboard": "Panel",
     "inbox": "Bandeja de entrada",
     "notifications": "Notificaciones",

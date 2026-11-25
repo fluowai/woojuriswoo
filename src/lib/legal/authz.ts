@@ -16,183 +16,202 @@ import type {
   LegalRole,
   LegalUserContext,
   Matter,
-} from "./types";
-import type { AccountRole } from "@/lib/auth/roles";
+} from './types';
+import type { AccountRole } from '@/lib/auth/roles';
 
 export type LegalResource =
-  | "saas_platform"
-  | "office_settings"
-  | "team_management"
-  | "intake_inbox"
-  | "clients"
-  | "conflicts"
-  | "matters"
-  | "matter_strategy"
-  | "cases"
-  | "communications"
-  | "deadlines"
-  | "agenda"
-  | "documents"
-  | "contracts"
-  | "finance"
-  | "portal_admin"
-  | "portal_client"
-  | "reports"
-  | "audit"
-  | "lgpd_dsar"
-  | "ai_assist";
+  | 'saas_platform'
+  | 'office_settings'
+  | 'team_management'
+  | 'intake_inbox'
+  | 'clients'
+  | 'conflicts'
+  | 'matters'
+  | 'matter_strategy'
+  | 'cases'
+  | 'communications'
+  | 'deadlines'
+  | 'agenda'
+  | 'documents'
+  | 'contracts'
+  | 'finance'
+  | 'portal_admin'
+  | 'portal_client'
+  | 'reports'
+  | 'audit'
+  | 'lgpd_dsar'
+  | 'ai_assist';
 
 export type LegalAction =
-  | "read"
-  | "write"
-  | "approve"
-  | "validate"
-  | "publish"
-  | "reverse"
-  | "export"
-  | "manage";
+  | 'read'
+  | 'write'
+  | 'approve'
+  | 'validate'
+  | 'publish'
+  | 'reverse'
+  | 'export'
+  | 'manage';
 
-const ROLE_MATRIX: Record<LegalRole, Partial<Record<LegalResource, LegalAction[]>>> = {
+const ROLE_MATRIX: Record<
+  LegalRole,
+  Partial<Record<LegalResource, LegalAction[]>>
+> = {
   platform_ops: {
-    saas_platform: ["read", "write", "manage"],
+    saas_platform: ['read', 'write', 'manage'],
+  },
+  reseller_admin: {
+    saas_platform: ['read', 'write', 'manage'],
+    office_settings: ['read', 'write', 'manage'],
+    team_management: ['read', 'write', 'manage'],
+    reports: ['read', 'export'],
+    audit: ['read', 'export'],
   },
   partner_admin: {
-    saas_platform: ["read"],
-    office_settings: ["read", "write", "manage"],
-    team_management: ["read", "write", "manage"],
-    intake_inbox: ["read", "write"],
-    clients: ["read", "write", "export"],
-    conflicts: ["read", "write", "approve"],
-    matters: ["read", "write", "approve", "manage"],
-    matter_strategy: ["read", "write"],
-    cases: ["read", "write"],
-    communications: ["read", "write", "validate"],
-    deadlines: ["read", "write", "validate", "approve"],
-    agenda: ["read", "write"],
-    documents: ["read", "write", "approve", "publish"],
-    contracts: ["read", "write", "approve"],
-    finance: ["read", "write", "approve", "reverse", "export"],
-    portal_admin: ["read", "write", "publish", "manage"],
-    reports: ["read", "export"],
-    audit: ["read", "export"],
-    lgpd_dsar: ["read", "write", "approve"],
-    ai_assist: ["read", "write"],
+    saas_platform: ['read'],
+    office_settings: ['read', 'write', 'manage'],
+    team_management: ['read', 'write', 'manage'],
+    intake_inbox: ['read', 'write'],
+    clients: ['read', 'write', 'export'],
+    conflicts: ['read', 'write', 'approve'],
+    matters: ['read', 'write', 'approve', 'manage'],
+    matter_strategy: ['read', 'write'],
+    cases: ['read', 'write'],
+    communications: ['read', 'write', 'validate'],
+    deadlines: ['read', 'write', 'validate', 'approve'],
+    agenda: ['read', 'write'],
+    documents: ['read', 'write', 'approve', 'publish'],
+    contracts: ['read', 'write', 'approve'],
+    finance: ['read', 'write', 'approve', 'reverse', 'export'],
+    portal_admin: ['read', 'write', 'publish', 'manage'],
+    reports: ['read', 'export'],
+    audit: ['read', 'export'],
+    lgpd_dsar: ['read', 'write', 'approve'],
+    ai_assist: ['read', 'write'],
   },
   coordinator: {
-    office_settings: ["read"],
-    team_management: ["read"],
-    intake_inbox: ["read", "write"],
-    clients: ["read", "write"],
-    conflicts: ["read", "write", "approve"],
-    matters: ["read", "write", "approve"],
-    matter_strategy: ["read", "write"],
-    cases: ["read", "write"],
-    communications: ["read", "write", "validate"],
-    deadlines: ["read", "write", "validate", "approve"],
-    agenda: ["read", "write"],
-    documents: ["read", "write", "approve", "publish"],
-    contracts: ["read", "write"],
-    finance: ["read"],
-    portal_admin: ["read", "write", "publish"],
-    reports: ["read", "export"],
-    audit: ["read"],
-    lgpd_dsar: ["read"],
-    ai_assist: ["read", "write"],
+    office_settings: ['read'],
+    team_management: ['read'],
+    intake_inbox: ['read', 'write'],
+    clients: ['read', 'write'],
+    conflicts: ['read', 'write', 'approve'],
+    matters: ['read', 'write', 'approve'],
+    matter_strategy: ['read', 'write'],
+    cases: ['read', 'write'],
+    communications: ['read', 'write', 'validate'],
+    deadlines: ['read', 'write', 'validate', 'approve'],
+    agenda: ['read', 'write'],
+    documents: ['read', 'write', 'approve', 'publish'],
+    contracts: ['read', 'write'],
+    finance: ['read'],
+    portal_admin: ['read', 'write', 'publish'],
+    reports: ['read', 'export'],
+    audit: ['read'],
+    lgpd_dsar: ['read'],
+    ai_assist: ['read', 'write'],
   },
   lawyer: {
-    office_settings: ["read"],
-    intake_inbox: ["read", "write"],
-    clients: ["read", "write"],
-    conflicts: ["read", "write"],
-    matters: ["read", "write"],
-    matter_strategy: ["read", "write"],
-    cases: ["read", "write"],
-    communications: ["read", "write", "validate"],
-    deadlines: ["read", "write", "validate"],
-    agenda: ["read", "write"],
-    documents: ["read", "write", "approve", "publish"],
-    contracts: ["read", "write"],
-    finance: ["read"],
-    portal_admin: ["read", "write", "publish"],
-    reports: ["read"],
-    audit: ["read"],
-    ai_assist: ["read", "write"],
+    office_settings: ['read'],
+    intake_inbox: ['read', 'write'],
+    clients: ['read', 'write'],
+    conflicts: ['read', 'write'],
+    matters: ['read', 'write'],
+    matter_strategy: ['read', 'write'],
+    cases: ['read', 'write'],
+    communications: ['read', 'write', 'validate'],
+    deadlines: ['read', 'write', 'validate'],
+    agenda: ['read', 'write'],
+    documents: ['read', 'write', 'approve', 'publish'],
+    contracts: ['read', 'write'],
+    finance: ['read'],
+    portal_admin: ['read', 'write', 'publish'],
+    reports: ['read'],
+    audit: ['read'],
+    ai_assist: ['read', 'write'],
   },
   assistant: {
-    intake_inbox: ["read", "write"],
-    clients: ["read", "write"],
-    conflicts: ["read", "write"],
-    matters: ["read", "write"],
-    cases: ["read"],
-    communications: ["read", "write"],
-    deadlines: ["read", "write"],
-    agenda: ["read", "write"],
-    documents: ["read", "write"],
-    contracts: ["read"],
-    ai_assist: ["read", "write"],
+    intake_inbox: ['read', 'write'],
+    clients: ['read', 'write'],
+    conflicts: ['read', 'write'],
+    matters: ['read', 'write'],
+    cases: ['read'],
+    communications: ['read', 'write'],
+    deadlines: ['read', 'write'],
+    agenda: ['read', 'write'],
+    documents: ['read', 'write'],
+    contracts: ['read'],
+    ai_assist: ['read', 'write'],
+  },
+  secretary: {
+    intake_inbox: ['read', 'write'],
+    clients: ['read', 'write'],
+    conflicts: ['read', 'write'],
+    matters: ['read'],
+    agenda: ['read', 'write'],
+    communications: ['read', 'write'],
+    contracts: ['read'],
   },
   reception: {
-    intake_inbox: ["read", "write"],
-    clients: ["read", "write"],
-    conflicts: ["read", "write"],
-    matters: ["read"],
-    agenda: ["read", "write"],
-    contracts: ["read"],
+    intake_inbox: ['read', 'write'],
+    clients: ['read', 'write'],
+    conflicts: ['read', 'write'],
+    matters: ['read'],
+    agenda: ['read', 'write'],
+    contracts: ['read'],
   },
   finance: {
-    clients: ["read"],
-    matters: ["read"],
-    contracts: ["read"],
-    finance: ["read", "write", "reverse", "export"],
-    portal_admin: ["read", "publish"],
-    reports: ["read", "export"],
-    audit: ["read"],
+    clients: ['read'],
+    matters: ['read'],
+    contracts: ['read'],
+    finance: ['read', 'write', 'reverse', 'export'],
+    portal_admin: ['read', 'publish'],
+    reports: ['read', 'export'],
+    audit: ['read'],
   },
   client: {
-    portal_client: ["read", "write"],
+    portal_client: ['read', 'write'],
   },
   auditor: {
-    office_settings: ["read"],
-    team_management: ["read"],
-    intake_inbox: ["read"],
-    clients: ["read"],
-    conflicts: ["read"],
-    matters: ["read"],
-    cases: ["read"],
-    communications: ["read"],
-    deadlines: ["read"],
-    agenda: ["read"],
-    documents: ["read"],
-    contracts: ["read"],
-    finance: ["read", "export"],
-    reports: ["read", "export"],
-    audit: ["read", "export"],
-    lgpd_dsar: ["read"],
+    office_settings: ['read'],
+    team_management: ['read'],
+    intake_inbox: ['read'],
+    clients: ['read'],
+    conflicts: ['read'],
+    matters: ['read'],
+    cases: ['read'],
+    communications: ['read'],
+    deadlines: ['read'],
+    agenda: ['read'],
+    documents: ['read'],
+    contracts: ['read'],
+    finance: ['read', 'export'],
+    reports: ['read', 'export'],
+    audit: ['read', 'export'],
+    lgpd_dsar: ['read'],
   },
 };
 
 export function mapAccountRoleToLegalRole(
   accountRole: AccountRole | null | undefined,
-  explicitLegalRole?: LegalRole | null,
+  explicitLegalRole?: LegalRole | null
 ): LegalRole {
   if (explicitLegalRole) return explicitLegalRole;
   switch (accountRole) {
-    case "owner":
-    case "admin":
-      return "partner_admin";
-    case "agent":
-      return "lawyer";
-    case "viewer":
-      return "auditor";
+    case 'owner':
+    case 'admin':
+      return 'partner_admin';
+    case 'agent':
+      return 'lawyer';
+    case 'viewer':
+      return 'auditor';
     default:
-      return "assistant";
+      return 'assistant';
   }
 }
 
 export function canPerform(
-  user: Pick<LegalUserContext, "legalRole">,
+  user: Pick<LegalUserContext, 'legalRole'>,
   resource: LegalResource,
-  action: LegalAction,
+  action: LegalAction
 ): boolean {
   const allowed = ROLE_MATRIX[user.legalRole]?.[resource];
   return Array.isArray(allowed) && allowed.includes(action);
@@ -203,7 +222,7 @@ export function isBreakGlassActive(
   userId: string,
   accountId: string,
   matterId?: string,
-  now: Date = new Date(),
+  now: Date = new Date()
 ): boolean {
   if (grant.operator_user_id !== userId) return false;
   if (grant.account_id !== accountId) return false;
@@ -236,12 +255,12 @@ export function evaluateMatterAccess(
   user: LegalUserContext,
   matter: Matter,
   breakGlassGrants: BreakGlassGrant[] = [],
-  now: Date = new Date(),
+  now: Date = new Date()
 ): MatterAccessDecision {
   // 1. Break-glass excepcional para operação SaaS
-  if (user.legalRole === "platform_ops") {
+  if (user.legalRole === 'platform_ops') {
     const activeGrant = breakGlassGrants.find((g) =>
-      isBreakGlassActive(g, user.userId, matter.account_id, matter.id, now),
+      isBreakGlassActive(g, user.userId, matter.account_id, matter.id, now)
     );
     if (activeGrant) {
       return {
@@ -252,7 +271,7 @@ export function evaluateMatterAccess(
     }
     return {
       allowed: false,
-      reason: "Operação SaaS não possui acesso rotineiro às pastas jurídicas",
+      reason: 'Operação SaaS não possui acesso rotineiro às pastas jurídicas',
     };
   }
 
@@ -260,15 +279,16 @@ export function evaluateMatterAccess(
   if (user.accountId !== matter.account_id) {
     return {
       allowed: false,
-      reason: "Isolamento multi-tenant: pasta pertence a outro escritório",
+      reason: 'Isolamento multi-tenant: pasta pertence a outro escritório',
     };
   }
 
   // 3. Cliente acessa somente pelo Portal do Cliente (nunca via rota interna de pasta)
-  if (user.legalRole === "client") {
+  if (user.legalRole === 'client') {
     return {
       allowed: false,
-      reason: "Cliente deve acessar apenas itens publicados no Portal do Cliente",
+      reason:
+        'Cliente deve acessar apenas itens publicados no Portal do Cliente',
     };
   }
 
@@ -277,14 +297,14 @@ export function evaluateMatterAccess(
     (g) =>
       g.user_id === user.userId &&
       !g.revoked_at &&
-      (!g.expires_at || new Date(g.expires_at).getTime() > nowMs),
+      (!g.expires_at || new Date(g.expires_at).getTime() > nowMs)
   );
   const activeMember = matter.members.find(
     (m) =>
       m.user_id === user.userId &&
       m.is_active &&
       !m.revoked_at &&
-      (!m.access_expires_at || new Date(m.access_expires_at).getTime() > nowMs),
+      (!m.access_expires_at || new Date(m.access_expires_at).getTime() > nowMs)
   );
 
   // 4. PRECEDÊNCIA ABSOLUTA DA BARREIRA DE SIGILO (Ethical Wall)
@@ -293,25 +313,25 @@ export function evaluateMatterAccess(
     if (hasExplicitGrant || activeMember) {
       return {
         allowed: true,
-        reason: "Grant explícito ou vínculo ativo em pasta restrita",
+        reason: 'Grant explícito ou vínculo ativo em pasta restrita',
         canViewStrategy: Boolean(
           hasExplicitGrant ||
-            (activeMember?.can_view_strategy && user.legalRole !== "assistant"),
+          (activeMember?.can_view_strategy && user.legalRole !== 'assistant')
         ),
       };
     }
     return {
       allowed: false,
       reason:
-        "Pasta sob sigilo/acesso restrito: exige concessão explícita na lista de acesso (barreira de sigilo)",
+        'Pasta sob sigilo/acesso restrito: exige concessão explícita na lista de acesso (barreira de sigilo)',
     };
   }
 
   // 5. Perfis com referência mínima (financeiro e recepção)
-  if (user.legalRole === "finance" || user.legalRole === "reception") {
+  if (user.legalRole === 'finance' || user.legalRole === 'reception') {
     return {
       allowed: true,
-      reason: "Referência mínima autorizada para perfil operacional",
+      reason: 'Referência mínima autorizada para perfil operacional',
       minimalReferenceOnly: true,
       canViewStrategy: false,
     };
@@ -319,20 +339,19 @@ export function evaluateMatterAccess(
 
   // 6. Sócio, Coordenador e Auditor em pastas não restritas
   if (
-    user.legalRole === "partner_admin" ||
-    user.legalRole === "coordinator" ||
-    user.legalRole === "auditor"
+    user.legalRole === 'partner_admin' ||
+    user.legalRole === 'coordinator' ||
+    user.legalRole === 'auditor'
   ) {
     return {
       allowed: true,
-      reason: "Acesso permitido por perfil em pasta não restrita",
-      canViewStrategy: user.legalRole !== "auditor",
+      reason: 'Acesso permitido por perfil em pasta não restrita',
+      canViewStrategy: user.legalRole !== 'auditor',
     };
   }
 
   // 7. Advogado e Assistente: membro, responsável ou mesma equipe
-  const inSameTeam =
-    !matter.team_id || user.teamIds.includes(matter.team_id);
+  const inSameTeam = !matter.team_id || user.teamIds.includes(matter.team_id);
   if (
     activeMember ||
     matter.lead_lawyer_user_id === user.userId ||
@@ -340,16 +359,16 @@ export function evaluateMatterAccess(
   ) {
     return {
       allowed: true,
-      reason: "Acesso autorizado por vinculação à pasta ou equipe",
+      reason: 'Acesso autorizado por vinculação à pasta ou equipe',
       canViewStrategy:
-        user.legalRole === "lawyer" &&
+        user.legalRole === 'lawyer' &&
         Boolean(activeMember?.can_view_strategy ?? true),
     };
   }
 
   return {
     allowed: false,
-    reason: "Usuário sem vínculo com a pasta ou equipe responsável",
+    reason: 'Usuário sem vínculo com a pasta ou equipe responsável',
   };
 }
 
@@ -358,7 +377,7 @@ export function evaluateMatterAccess(
  */
 export function sanitizeMatterForUser(
   matter: Matter,
-  decision: MatterAccessDecision,
+  decision: MatterAccessDecision
 ): Matter {
   if (decision.minimalReferenceOnly) {
     return {
@@ -368,7 +387,7 @@ export function sanitizeMatterForUser(
       next_step: null,
       checklists: [],
       access_grants: [],
-      parties: matter.parties.filter((p) => p.party_role === "cliente"),
+      parties: matter.parties.filter((p) => p.party_role === 'cliente'),
     };
   }
   if (!decision.canViewStrategy) {
@@ -385,25 +404,30 @@ export function sanitizeMatterForUser(
  * Nunca registrar CPF, CNPJ, tokens, chaves API ou telefones crus.
  */
 export function redactSensitiveForLog(input: string): string {
-  return input
-    // CPF (000.000.000-00 ou 11 dígitos)
-    .replace(/\b\d{3}\.?\d{3}\.?\d{3}-?\d{2}\b/g, "[CPF_REDACTED]")
-    // CNPJ (00.000.000/0000-00 ou 14 dígitos)
-    .replace(/\b\d{2}\.?\d{3}\.?\d{3}\/?\d{4}-?\d{2}\b/g, "[CNPJ_REDACTED]")
-    // APIKey / Bearer tokens
-    .replace(/(Bearer|APIKey)\s+[A-Za-z0-9._~+/=-]{8,}/gi, "$1 [TOKEN_REDACTED]")
-    // Chaves wacrm_ / sk-
-    .replace(/\b(wacrm_live_|sk-)[A-Za-z0-9_-]{8,}\b/g, "[KEY_REDACTED]");
+  return (
+    input
+      // CPF (000.000.000-00 ou 11 dígitos)
+      .replace(/\b\d{3}\.?\d{3}\.?\d{3}-?\d{2}\b/g, '[CPF_REDACTED]')
+      // CNPJ (00.000.000/0000-00 ou 14 dígitos)
+      .replace(/\b\d{2}\.?\d{3}\.?\d{3}\/?\d{4}-?\d{2}\b/g, '[CNPJ_REDACTED]')
+      // APIKey / Bearer tokens
+      .replace(
+        /(Bearer|APIKey)\s+[A-Za-z0-9._~+/=-]{8,}/gi,
+        '$1 [TOKEN_REDACTED]'
+      )
+      // Chaves wacrm_ / sk-
+      .replace(/\b(wacrm_live_|sk-)[A-Za-z0-9_-]{8,}\b/g, '[KEY_REDACTED]')
+  );
 }
 
 export function maskDocument(doc: string | null | undefined): string {
-  if (!doc) return "—";
-  const digits = doc.replace(/\D/g, "");
+  if (!doc) return '—';
+  const digits = doc.replace(/\D/g, '');
   if (digits.length === 11) {
     return `***.${digits.slice(3, 6)}.${digits.slice(6, 9)}-**`;
   }
   if (digits.length === 14) {
     return `**.${digits.slice(2, 5)}.${digits.slice(5, 8)}/${digits.slice(8, 12)}-**`;
   }
-  return "***";
+  return '***';
 }
